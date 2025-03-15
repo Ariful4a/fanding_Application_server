@@ -29,6 +29,25 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+        // Connect to the "insertDB" database and access its "haiku" collection
+        const database = client.db("FundingDB");
+        const FundingCollection = database.collection("Funding");
+
+    app.post('/campaign', async (req, res) => {
+        const addCampaign = req.body;
+        console.log(addCampaign);
+        const result = await FundingCollection.insertOne(addCampaign);
+        res.send(result);
+    });
+
+
+ 
+
+
+
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -47,8 +66,3 @@ run().catch(console.dir);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-
-
-// FandMaster
-// OURCnynL6g5JGI3M
