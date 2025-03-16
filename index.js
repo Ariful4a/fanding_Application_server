@@ -63,7 +63,7 @@ async function run() {
     // data update by id
     // app.put('/campaign/:id', async (req, res) => {
     //     const id = req.params.id;
-    //     const query = { _id: new ObjectId(id) };
+    //     const query = { _id: new ObjecltId(id) };
     //     const update = req.body;
     // //     const result = await FundingCollection.updateOne(query, { $set: update });
     // //     res.send(result);
@@ -89,7 +89,7 @@ async function run() {
         res.send(result);
     })
 
-
+   
 
 
     // Send a ping to confirm a successful connection
