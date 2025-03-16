@@ -36,10 +36,11 @@ async function run() {
         // Connect to the "insertDB" database and access its "haiku" collection
         const database = client.db("FundingDB");
         const FundingCollection = database.collection("Funding");
+        const FundingDonateCollection = database.collection("FundingDonate");
 
     app.post('/campaign', async (req, res) => {
         const addCampaign = req.body;
-        console.log(addCampaign);
+        // console.log(addCampaign);
         const result = await FundingCollection.insertOne(addCampaign);
         res.send(result);
     });
@@ -64,9 +65,9 @@ async function run() {
     //     const id = req.params.id;
     //     const query = { _id: new ObjectId(id) };
     //     const update = req.body;
-    //     const result = await FundingCollection.updateOne(query, { $set: update });
-    //     res.send(result);
-    // })
+    // //     const result = await FundingCollection.updateOne(query, { $set: update });
+    // //     res.send(result);
+    // // })
 
     // // data delete by id
     // app.delete('/campaign/:id', async (req, res) => {
@@ -76,6 +77,17 @@ async function run() {
     //     res.send(result);
     // })
 
+    // fanding donate 
+    app.post('/donate', async (req, res) => {
+        const result = await FundingDonateCollection.insertOne(req.body);
+        res.send(result);
+    })
+
+    // data read by id
+    app.get('/donate', async (req, res) => {
+        const result = await FundingDonateCollection.find().toArray();
+        res.send(result);
+    })
 
 
 
