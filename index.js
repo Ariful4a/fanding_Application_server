@@ -70,12 +70,12 @@ async function run() {
     // // })
 
     // // data delete by id
-    // app.delete('/campaign/:id', async (req, res) => {
-    //     const id = req.params.id;
-    //     const query = { _id: new ObjectId(id) };
-    //     const result = await FundingCollection.deleteOne(query);
-    //     res.send(result);
-    // })
+    app.delete('/campaign/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await FundingCollection.deleteOne(query);
+        res.send(result);
+    })
 
     // fanding donate 
     app.post('/donate', async (req, res) => {
