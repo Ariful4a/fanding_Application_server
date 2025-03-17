@@ -92,7 +92,7 @@ async function run() {
        // My Campaigns - Filter by user email
        app.get('/myCampaigns', async (req, res) => {
         const userEmail = req.query.email;
-        console.log('User Email:', userEmail); 
+        // console.log('User Email:', userEmail); 
         if (!userEmail) {
           return res.status(400).send({ message: 'Email is required' });
         }
@@ -107,11 +107,24 @@ async function run() {
         }
     });
 
-    // my donate campaign filter user email
-    // app.get('/my-donate', async (req, res) => {
-    //     const result = await FundingDonateCollection.find({ email: req.query.email }).toArray();
-    //     res.send(result);
-    // })
+    // My Donate Campaigns - Filter by user email
+    app.get('/myDonateCampaigns', async (req, res) => {
+      const donarEmail = req.query.email;
+      console.log('Donar Email:', donarEmail); 
+      
+      if (!donarEmail) {
+          return res.status(400).send({ message: 'Email is required' });
+      }
+  
+      try {
+          const query = {  donarEmail: donarEmail };
+          const result = await FundingDonateCollection.find(query).toArray();
+          console.log('Fetched Campaigns:', result); 
+          res.send(result);
+      } catch (error) {
+          res.status(500).send({ message: 'Server error', error });
+      }
+  });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
