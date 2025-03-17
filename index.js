@@ -61,13 +61,25 @@ async function run() {
     })
 
     // data update by id
-    // app.put('/campaign/:id', async (req, res) => {
-    //     const id = req.params.id;
-    //     const query = { _id: new ObjecltId(id) };
-    //     const update = req.body;
-    // //     const result = await FundingCollection.updateOne(query, { $set: update });
-    // //     res.send(result);
-    // // })
+    app.put('/campaign/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const options = { upsert: true };
+        const update = req.body;
+        const updateCampaign = {
+            $set: {
+                title: update.title,
+                description: update.description,
+                photo: update.photo,
+                minDonation: update.minDonation,
+                startDate: update.startDate,
+                deadline: update.deadline,
+                type: update.type
+            }
+        }
+        const result = await FundingCollection.updateOne(query, updateCampaign, options);
+        res.send(result);
+    })
 
     // // data delete by id
     app.delete('/campaign/:id', async (req, res) => {
