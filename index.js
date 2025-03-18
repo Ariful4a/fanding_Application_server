@@ -45,8 +45,18 @@ async function run() {
         res.send(result);
     });
 
+    // home page campaigns show 6 data 
+    app.get('/homeCampaigns', async (req, res) => {
+      try {
+          const result = await FundingCollection.find().limit(6).toArray();
+          res.send(result);
+      } catch (error) {
+          console.error("Error fetching campaigns:", error);
+          res.status(500).send("Internal Server Error");
+      }
+  });
 
-    // data read 
+    // data all read 
     app.get('/campaign', async (req, res) => {
         const rusult = await FundingCollection.find().toArray();
         res.send(rusult);
@@ -118,6 +128,27 @@ async function run() {
           res.status(500).send({ message: 'Server error', error });
         }
     });
+
+    // top 3 campaigns
+    app.get('/topCampaigns', async (req, res) => {
+      try {
+          const result = await FundingCollection.aggregate([
+              {
+                  $addFields: {
+                      minDonation: { $toDouble: "$minDonation" } 
+                  }
+              },
+              { $sort: { minDonation: -1 } }, 
+              { $limit: 3 } 
+          ]).toArray();
+  
+          res.send(result);
+      } catch (error) {
+          console.error("Error fetching campaigns:", error);
+          res.status(500).send("Internal Server Error");
+      }
+  });
+  
 
     // My Donate Campaigns - Filter by user email
     app.get('/myDonateCampaigns', async (req, res) => {
